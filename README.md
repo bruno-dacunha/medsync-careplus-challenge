@@ -4,22 +4,20 @@ Visão Geral: Uma solução digital inovadora desenvolvida para reduzir o No-sho
 🎯 O Desafio de Negócio (O Problema)
 O no-show gera impactos críticos na cadeia de saúde, incluindo a perda de produtividade médica, aumento de custos operacionais e comprometimento da jornada de cuidado do paciente. O desafio foi criar um sistema que não apenas lembrasse o paciente, mas mudasse o seu comportamento e protegesse a receita da clínica.
 
-💡 A Solução e Arquitetura do Produto
-O MedSync foi estruturado em duas camadas de atuação para garantir a saúde do negócio e o bem-estar dos pacientes:
+## 💡 A Solução e Arquitetura do Produto
 
-Camada 1 (Core da Experiência - Centrada no Paciente):
+O **MedSync** foi estruturado em dois eixos de atuação interligados, desenhados para garantir a saúde do negócio e o bem-estar contínuo dos pacientes:
 
-Gamificação Premium: Sistema de pontos (Bronze, Prata, Ouro) e recompensas reais para pacientes assíduos.
+### 👤 Camada 1: Core da Experiência (Centrada no Paciente)
+Focada em engajamento, retenção e na jornada de cuidado.
+*   🏆 **Gamificação Premium:** Sistema de pontos progressivo (Níveis Bronze, Prata e Ouro) com recompensas reais para pacientes assíduos.
+*   ⏰ **Lembretes Inteligentes Multicanal:** Sistema de confirmação ativa com gatilhos de urgência (via *Countdown timer*) para reduzir o esquecimento.
 
-Lembretes inteligentes multicanal e confirmação ativa com gatilhos de urgência (Countdown timer).
-
-Camada 2 (Estratégia de Negócio - Centrada na Operação):
-
-Waitlist Automation: Preenchimento automático de vagas em caso de cancelamento.
-
-Saúde Preditiva (AI Insights): Cruzamento de dados para sugerir check-ups preventivos.
-
-Pre-visit Intake Form: Formulários de check-in antecipado online, otimizando o fluxo na recepção.
+### ⚙️ Camada 2: Estratégia de Negócio (Centrada na Operação)
+Focada em eficiência, previsibilidade e proteção da receita.
+*   🔄 **Waitlist Automation:** Preenchimento automático e inteligente de vagas ociosas em casos de cancelamentos de última hora.
+*   🧠 **Saúde Preditiva (AI Insights):** Motor de cruzamento de dados para sugerir check-ups preventivos, gerando novas oportunidades de atendimento.
+*   📋 **Pre-visit Intake Form:** Formulários de check-in antecipado 100% online, reduzindo filas e otimizando o fluxo de recepção da clínica.
 
 ## 🖥️ UX e Interface
 
