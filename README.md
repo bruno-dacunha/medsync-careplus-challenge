@@ -2,7 +2,7 @@
 
 Uma solução digital inovadora desenvolvida para reduzir o **No-show (não comparecimento)** em clínicas, promovendo o engajamento do paciente através de gamificação e otimizando a eficiência operacional da rede de saúde.
 
----
+
 
 ## 🎯 O Desafio de Negócio (O Problema)
 O *no-show* gera impactos críticos na cadeia de saúde. O desafio foi criar um sistema que não apenas lembrasse o paciente da consulta, mas que **mudasse o seu comportamento** e protegesse a receita da clínica, combatendo:
@@ -10,7 +10,7 @@ O *no-show* gera impactos críticos na cadeia de saúde. O desafio foi criar um 
 *   💸 Aumento de custos operacionais sem retorno financeiro.
 *   ⚠️ Comprometimento da eficácia na jornada de cuidado do paciente.
 
----
+
 
 ## 💡 A Solução e Arquitetura do Produto
 O **MedSync** foi estruturado em dois eixos de atuação interligados, desenhados para garantir a saúde do negócio e o bem-estar contínuo dos pacientes:
@@ -26,7 +26,7 @@ Focada em eficiência, previsibilidade e proteção da receita.
 *   🧠 **Saúde Preditiva (AI Insights):** Motor de cruzamento de dados para sugerir check-ups preventivos, gerando novas oportunidades de atendimento.
 *   📋 **Pre-visit Intake Form:** Formulários de check-in antecipado 100% online, reduzindo filas e otimizando o fluxo de recepção da clínica.
 
----
+
 
 ## 📱 UX e Interface
 A interface foi projetada com foco em clareza visual, *frictionless* (zero atrito) e com visão simplificada também para dependentes.
@@ -39,7 +39,7 @@ A interface foi projetada com foco em clareza visual, *frictionless* (zero atrit
 | **Confirmação de Ação** | **Reagendamento de Consultas** |
 | <img src="caminho/para/imagem3.png" width="300"> | <img src="caminho/para/imagem4.png" width="300"> |
 
----
+
 
 ## 🗄️ Arquitetura de Dados (Modelagem)
 Para sustentar a operação clínica e o motor de gamificação, o banco de dados relacional foi modelado de forma escalável:
@@ -51,7 +51,7 @@ Para sustentar a operação clínica e o motor de gamificação, o banco de dado
 *   [🔗 Visualizar Modelo Lógico](link-para-a-imagem-ou-pdf)
 *   [🔗 Visualizar Modelo Relacional](link-para-a-imagem-ou-pdf)
 
----
+
 
 ## 🛠️ Tecnologias Utilizadas
 A arquitetura técnica do projeto foi construída utilizando as seguintes ferramentas e frameworks:
@@ -62,7 +62,7 @@ A arquitetura técnica do projeto foi construída utilizando as seguintes ferram
 *   **Design & Prototipação:** Figma
 *   **Gerenciamento de Dependências:** Maven
 
----
+
 
 ## 🚀 Como Executar o Projeto
 *(Instruções essenciais para o CTO ou avaliador técnico rodar a sua aplicação na máquina dele)*
