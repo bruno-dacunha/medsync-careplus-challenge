@@ -21,3 +21,33 @@ Saúde Preditiva (AI Insights): Cruzamento de dados para sugerir check-ups preve
 
 Pre-visit Intake Form: Formulários de check-in antecipado online, otimizando o fluxo na recepção.
 
+## 🖥️ UX e Interface
+
+A interface foi projetada focando em clareza visual, *frictionless* (zero atrito) e visão de dependentes. Abaixo, as principais telas do fluxo:
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/tela-dashboard.png" width="300px">
+      <br>
+      <i>Dashboard Principal</i>
+    </td>
+    <td align="center">
+      <img src="assets/tela-checkin.png" width="300px">
+      <br>
+      <i>Tela de Check-in</i>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/tela-confirmar.png" width="300px">
+      <br>
+      <i>Confirmação de Ação</i>
+    </td>
+    <td align="center">
+      <img src="assets/tela-reagendamento.png" width="300px">
+      <br>
+      <i>Reagendamento de Consultas</i>
+    </td>
+  </tr>
+</table>
