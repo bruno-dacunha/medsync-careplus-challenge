@@ -51,3 +51,32 @@ A interface foi projetada focando em clareza visual, *frictionless* (zero atrito
     </td>
   </tr>
 </table>
+
+## ⚙️ Arquitetura de Dados (Modelagem)
+
+Para sustentar a operação e a gamificação, o banco de dados relacional foi modelado contemplando o ecossistema médico:
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/mer-mod-logico.png" width="400px">
+      <br>
+      <i>Modelo Lógico</i>
+    </td>
+    <td align="center">
+      <img src="assets/mer-mod-relacional.png" width="400px">
+      <br>
+      <i>Modelo Relacional</i>
+    </td>
+  </tr>
+</table>
+
+- **Tabelas Principais:** PACIENTE, MEDICO, CLINICA, CONSULTA.
+- **Motor de Gamificação:** Estruturação das entidades MEDSYNC (status de nível e pontos), RECOMPENSA e RESGATE_RECOMPENSA para rastreabilidade de benefícios.
+
+- 🛠️ Tecnologias Utilizadas
+Modelagem de Dados: Oracle SQL / Relacional.
+
+Design/Prototipação: Figma / UI Design.
+
+Linguagens/Frameworks: (Liste aqui o que você usou de código: ex: Java Spring Boot, React, etc.)
