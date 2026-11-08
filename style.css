@@ -1,4 +1,4 @@
-/* CSS Variables - Care Plus Identity */
+/* CSS Variables — Care Plus Identity */
     :root {
       --cp-blue:       #5B8CBE;
       --cp-blue-dark:  #41729F;
@@ -17,7 +17,7 @@
       --shadow-lg:     0 8px 40px rgba(0,91,170,.18);
     }
 
-    /* Reset & Base Styles */
+    /* Reset & Base */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -152,7 +152,7 @@
       transition: margin .3s ease;
     }
 
-    /* Topbar */
+    /* Top Bar */
     .topbar {
       display: flex;
       align-items: center;
@@ -202,7 +202,7 @@
 
     .card-cp:hover { box-shadow: var(--shadow-lg); }
 
-    /* SPA Sections Navigation */
+    /* Sections (SPA navigation) */
     .section-page { display: none; animation: fadeIn .35s ease; }
     .section-page.active { display: block; }
 
@@ -211,7 +211,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Dashboard Stat Cards */
+    /* Stat Cards (Dashboard) */
     .stat-card {
       background: var(--cp-white);
       border-radius: var(--radius);
@@ -314,7 +314,7 @@
       letter-spacing: .06em;
     }
 
-    /* Confirm & Reschedule Section */
+    /* Confirm / Reschedule Section */
     .confirm-card {
       background: var(--cp-white);
       border-radius: var(--radius);
@@ -380,7 +380,7 @@
       padding: 8px 0;
     }
 
-    /* Alert Banner */
+    /* Alert Banner (reforço) */
     .alert-reinforce {
       background: linear-gradient(90deg, #fff7ed, #fef3c7);
       border: 1.5px solid #fbbf24;
@@ -393,7 +393,7 @@
 
     .alert-reinforce i { font-size: 1.5rem; color: #d97706; }
 
-    /* Calendar UI */
+    /* Calendar */
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -485,7 +485,7 @@
       cursor: default;
     }
 
-    /* Gamification UI */
+    /* Gamification */
     .level-stepper {
       display: flex;
       align-items: center;
@@ -656,7 +656,7 @@
       font-weight: 600;
     }
 
-    /* History List */
+    /* History */
     .history-item {
       display: flex;
       align-items: flex-start;
@@ -694,7 +694,7 @@
     .history-badge.missed    { background: #fee2e2; color: #dc2626; }
     .history-badge.cancelled { background: #fef3c7; color: #d97706; }
 
-    /* Check-in Steps */
+    /* Check-in */
     .checkin-step {
       display: flex;
       align-items: flex-start;
@@ -722,7 +722,7 @@
     .step-title { font-weight: 600; font-size: .9rem; }
     .step-desc  { font-size: .78rem; color: var(--cp-gray-text); margin-top: 2px; }
 
-    /* Modal Overlay */
+    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -750,7 +750,7 @@
       to   { transform: scale(1); opacity: 1; }
     }
 
-    /* Toast Notification */
+    /* Toast */
     #toast {
       position: fixed;
       bottom: 24px; right: 24px;
@@ -834,7 +834,7 @@
     }
     .push-actions button.confirm { color: #4ade80; border-right: 1px solid rgba(255,255,255,.1); }
 
-    /* Dependents Offcanvas */
+    /* Offcanvas Dependentes */
     .offcanvas-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -865,7 +865,7 @@
       right: 0;
     }
 
-    /* Responsive Adjustments */
+    /* Responsive */
     @media (max-width: 768px) {
       .sidebar {
         transform: translateX(-100%);
@@ -899,7 +899,7 @@
       .countdown-box .num { font-size: 1.2rem; }
     }
 
-    /* Global Utilities */
+    /* Misc Utilities */
     .section-title {
       font-size: 1rem;
       font-weight: 700;
