@@ -1,4 +1,4 @@
-// State Management
+// State
   let appState = {
     confirmed: false,
     checkinDone: false,
@@ -6,13 +6,13 @@
     selectedDate: null,
     selectedTime: null,
     calYear: 2026,
-    calMonth: 4
+    calMonth: 4 // 0-indexed → Maio
   };
 
   const POINTS_CONFIRM = 100;
   const POINTS_CHECKIN = 50;
 
-  // Initialization
+  // Init
   document.addEventListener('DOMContentLoaded', () => {
     setCurrentDate();
     startCountdown();
@@ -29,7 +29,7 @@
       ' ' + d.toLocaleDateString('pt-BR', opts);
   }
 
-  // SPA Navigation
+  // Navigation (SPA)
   const pageTitles = {
     dashboard:    ['Dashboard', 'Olá, Bruno! Veja seu resumo de saúde.'],
     confirmacao:  ['Confirmar Consulta', 'Garanta sua presença e ganhe pontos.'],
@@ -54,13 +54,15 @@
     document.getElementById('pageTitle').textContent = title;
     document.getElementById('pageSubtitle').textContent = sub;
 
+    // Animações específicas por seção
     if (id === 'gamificacao') animateProgressBar();
     if (id === 'dashboard')   animateDashboardProgress();
 
+    // Fechar sidebar mobile
     if (window.innerWidth <= 768) toggleSidebar(false);
   }
 
-  // Sidebar Controls
+  // Sidebar (mobile)
   function toggleSidebar(forceClose) {
     const sb = document.getElementById('sidebar');
     const ov = document.getElementById('sidebarOverlay');
@@ -73,16 +75,19 @@
     }
   }
 
-  // Countdown Timer
+  // Countdown
   function startCountdown() {
+    // Define a data alvo como 10 dias a partir do momento de abertura do web app
     const target = new Date();
     target.setDate(target.getDate() + 10);
-    target.setHours(14, 0, 0, 0);
+    target.setHours(14, 0, 0, 0); // Define um horário fixo de exemplo
 
+    // Formata a data para exibir no HTML
     const dateOpts = { day: '2-digit', month: '2-digit', year: 'numeric' };
     const formattedDate = target.toLocaleDateString('pt-BR', dateOpts);
     const dayMonthStr = target.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
 
+    // Atualiza os textos espalhados no HTML com a nova data (buscando pelos padrões estáticos ou containers)
     document.body.innerHTML = document.body.innerHTML.replace(/15\/05\/2026/g, formattedDate);
     document.body.innerHTML = document.body.innerHTML.replace(/15 de Maio/g, dayMonthStr);
 
@@ -112,23 +117,27 @@
     setInterval(tick, 1000);
   }
 
-  // Confirmation Actions
+  // Confirm Presença
   function confirmPresenca() {
     if (appState.confirmed) return;
     appState.confirmed = true;
     appState.points += POINTS_CONFIRM;
     updatePointsUI();
 
+    // Feedback visual — botão
     const btn = document.getElementById('mainConfirmBtn');
     btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Confirmado!';
     btn.classList.add('confirmed');
     btn.disabled = true;
 
+    // Status card aparece
     const status = document.getElementById('confirmStatus');
     status.style.display = 'flex';
 
+    // Alerta some
     document.getElementById('reinforceAlert').style.display = 'none';
 
+    // Dashboard botão
     const dbBtn = document.getElementById('dashConfirmBtn');
     if (dbBtn) {
       dbBtn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Confirmado!';
@@ -178,11 +187,12 @@
     showToast('📅 Consulta salva no calendário! +20 pts.', 'success');
   }
 
-  // Calendar Rendering
+  // Calendar
   const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
                       'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-  const bookedDays = [16, 22, 28];
+  // Dias bloqueados (no passado ou fins de semana)
+  const bookedDays = [16, 22, 28]; // exemplos de dias já ocupados
 
   function renderCalendar() {
     const y = appState.calYear;
@@ -197,6 +207,7 @@
     const grid = document.getElementById('calGrid');
     grid.innerHTML = '';
 
+    // Empty cells before first day
     for (let i = 0; i < firstDay; i++) {
       const el = document.createElement('button');
       el.className = 'cal-day empty';
@@ -305,8 +316,9 @@
     showSection('dashboard');
   }
 
-  // Gamification & Points
+  // Gamification
   function animateProgressBar() {
+    // 1100 / 1500 → Prata→Ouro range: 500→1500 → (1100-500)/(1500-500) = 60%
     const pct = Math.round((appState.points - 500) / (1500 - 500) * 100);
     setTimeout(() => {
       document.getElementById('progressBar').style.width = Math.min(100, pct) + '%';
@@ -351,7 +363,7 @@
     showToast('🎁 Recompensa resgatada com sucesso!', 'success');
   }
 
-  // History Log
+  // History
   const historyData = [
     { title:'Dr. Carlos Ferreira — Cardiologia',    date:'10/04/2026 · 14h00', status:'attended',  pts:'+100 pts' },
     { title:'Dra. Juliana Alves — Dermatologia',    date:'22/03/2026 · 10h30', status:'attended',  pts:'+100 pts' },
@@ -415,7 +427,7 @@
     renderHistory(filter);
   }
 
-  // Check-in Flow
+  // Check-in
   const checkinStepsData = [
     { title:'Confirmar presença',        desc:'Confirme sua presença na consulta pelo app.', status: 'done' },
     { title:'Pre-visit Intake Form',     desc:'Preencha dados prévios. Agiliza a consulta e gera + pontos.', status: 'done' },
@@ -447,6 +459,7 @@
     appState.points += POINTS_CHECKIN;
     updatePointsUI();
 
+    // Atualiza step
     checkinStepsData[2].status = 'done';
     checkinStepsData[3].status = 'current';
     renderCheckinSteps();
@@ -454,7 +467,7 @@
     showToast('✅ Check-in realizado! +50 pts adicionados.', 'success');
   }
 
-  // Toast Notifications
+  // Toast
   let toastTimeout;
   function showToast(msg, type = 'success') {
     const toast = document.getElementById('toast');
@@ -468,11 +481,12 @@
     toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
   }
 
-  // Push Simulator
+  // Push Notification Simulator
   function triggerPushSimulation() {
     const push = document.getElementById('pushSim');
     push.classList.add('show');
     
+    // Auto-hide after 8 seconds if ignored
     setTimeout(() => {
       if (push.classList.contains('show')) {
         closePush();
@@ -489,7 +503,7 @@
     confirmPresenca();
   }
 
-  // Dependents Offcanvas
+  // Dependentes Offcanvas
   function openDependents() {
     document.getElementById('depOverlay').classList.add('show');
     document.getElementById('depPanel').classList.add('show');
@@ -513,7 +527,7 @@
     setTimeout(closeDependents, 2000);
   }
 
-  // Reinforce Alert
+  // Reinforce Alert — mostra depois de 2s no dashboard
   setTimeout(() => {
     if (!appState.confirmed) {
       const el = document.getElementById('reinforceAlert');
