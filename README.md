@@ -18,6 +18,7 @@ O **MedSync** foi estruturado em duas camadas de atuação para garantir a saúd
 ### 👤 Camada 1: Core da Experiência (Centrada no Paciente)
 *   🏆 **Gamificação Premium:** Sistema de pontos progressivo (Bronze, Prata, Ouro) e recompensas reais para pacientes assíduos.
 *   ⏰ **Lembretes Inteligentes:** Abordagem multicanal e confirmação ativa com gatilhos de urgência (*Countdown timer*).
+*   📅 **Reagendamento Fácil e Intuitivo:** Remarcação de consultas em poucos cliques com horários sugeridos, reduzindo o atrito na jornada.
 
 ### ⚙️ Camada 2: Estratégia de Negócio (Centrada na Operação)
 *   🔄 **Waitlist Automation:** Preenchimento automático de vagas em caso de cancelamento.
