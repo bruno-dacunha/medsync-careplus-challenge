@@ -56,5 +56,4 @@ Para sustentar a operação e a gamificação, o banco de dados relacional foi m
 
 ## 🛠️ Tecnologias Utilizadas
 *   **Modelagem de Dados:** Oracle SQL / Relacional
-*   **Design/Prototipação:** Figma / UI Design
 *   **Linguagens/Frameworks (Front-end):** HTML5, CSS3, JavaScript, Bootstrap 5 e Bootstrap Icons
