@@ -1,3 +1,5 @@
+🌐 **Acesse o sistema rodando ao vivo:** [Clique aqui para abrir]([seu-link-aqui](https://bruno-dacunha.github.io/medsync-careplus-challenge/))
+
 # 🚀 MedSync - Powered by Care Plus (FIAP Challenge)
 
 **Visão Geral:** Uma solução digital inovadora desenvolvida para reduzir o *No-show* (não comparecimento) em clínicas, promovendo engajamento do paciente através de gamificação e otimizando a eficiência operacional da rede de saúde.
