@@ -1,4 +1,4 @@
-🌐 **Acesse o sistema rodando ao vivo:** [Clique aqui para abrir]([seu-link-aqui](https://bruno-dacunha.github.io/medsync-careplus-challenge/))
+🌐 **Acesse o sistema rodando ao vivo:** [Clique aqui para abrir](https://bruno-dacunha.github.io/medsync-careplus-challenge/)
 
 # 🚀 MedSync - Powered by Care Plus (FIAP Challenge)
 
