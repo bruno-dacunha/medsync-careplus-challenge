@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedSync — Powered by Care Plus</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- ============================================================
+       SIDEBAR
+  ============================================================ -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <!-- MedSync Logo -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="background:var(--cp-blue); width:44px; height:34px; display:flex; align-items:center; justify-content:center; position:relative; border-radius:2px;">
+          <svg width="44" height="34" viewBox="0 0 44 34" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute; top:0; left:0;">
+             <path d="M0 20 H12 L17 8 L24 28 L29 20 H44" stroke="white" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:var(--cp-blue);font-size:1.45rem;line-height:1;letter-spacing:-0.5px;">MedSync</div>
+        </div>
+      </div>
+      <div class="subtitle" style="margin-top:14px; display:flex; align-items:center; gap:6px;">
+        <span style="background:var(--cp-cyan); width:16px; height:16px; border-radius:4px; display:flex; align-items:center; justify-content:center;">
+            <i class="bi bi-heart-pulse-fill" style="color:#fff; font-size:10px;"></i>
+        </span>
+        <span style="font-size:.65rem; color:var(--cp-gray-text); letter-spacing:.04em; font-weight:600; text-transform:none;">Powered by Care Plus</span>
+      </div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-item-label">Principal</div>
+      <a class="nav-link-cp active" onclick="showSection('dashboard')">
+        <i class="bi bi-grid-1x2-fill"></i> Dashboard
+      </a>
+      <a class="nav-link-cp" onclick="showSection('confirmacao')">
+        <i class="bi bi-calendar2-check-fill"></i> Confirmar Consulta
+      </a>
+      <a class="nav-link-cp" onclick="showSection('reagendamento')">
+        <i class="bi bi-calendar2-week"></i> Reagendar
+      </a>
+
+      <div class="nav-item-label" style="margin-top:8px;">Engajamento</div>
+      <a class="nav-link-cp" onclick="showSection('gamificacao')">
+        <i class="bi bi-trophy-fill"></i> Pontos & Recompensas
+      </a>
+      <a class="nav-link-cp" onclick="showSection('historico')">
+        <i class="bi bi-clock-history"></i> Histórico
+      </a>
+      <a class="nav-link-cp" onclick="showSection('checkin')">
+        <i class="bi bi-qr-code"></i> Check-in
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user mb-2">
+        <div class="sidebar-avatar">BC</div>
+        <div class="sidebar-user-info">
+          <div class="name">Bruno da Cunha</div>
+          <div class="plan">Plano Empresarial Gold</div>
+        </div>
+      </div>
+      <button class="btn w-100" onclick="openDependents()" style="background:rgba(0,0,0,.04); border:none; font-size:.75rem; font-weight:600; text-align:left; display:flex; justify-content:space-between; align-items:center; border-radius:6px; padding:8px 12px; cursor:pointer;">
+        <div><i class="bi bi-people-fill me-2 text-cp-blue"></i>Dependentes (2)</div>
+        <i class="bi bi-chevron-right" style="color:var(--cp-gray-text);"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+  ============================================================ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="btn-menu-toggle" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+          </button>
+          <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">Olá, Bruno! Veja seu resumo de saúde.</p>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div style="font-size:.82rem;color:var(--cp-gray-text);">
+          <i class="bi bi-calendar3"></i>
+          <span id="currentDate"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 1: DASHBOARD
+    ============================================================ -->
+    <div id="sec-dashboard" class="section-page active">
+
+      <!-- Alerta de reforço (condicional) -->
+      <div class="alert-reinforce mb-3" id="reinforceAlert" style="display:none;">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div>
+          <div style="font-weight:600;font-size:.9rem;">Você ainda não confirmou sua consulta!</div>
+          <div style="font-size:.8rem;color:#92400e;margin-top:2px;">
+            Sua consulta é amanhã. Confirme agora para garantir seu horário e ganhar pontos.
+          </div>
+        </div>
+        <button class="btn-cp-primary ms-auto" style="padding:8px 16px;font-size:.8rem;" onclick="showSection('confirmacao')">
+          Confirmar
+        </button>
+      </div>
+
+      <!-- Próxima Consulta Banner -->
+      <div class="appointment-banner mb-3">
+        <div class="badge-status">Próxima Consulta</div>
+        <div class="d-flex align-items-end justify-content-between flex-wrap gap-3">
+          <div>
+            <h2>Dr. Carlos Ferreira</h2>
+            <p>Cardiologia · Unidade Paulista · 15/05/2026 às 14h00</p>
+            <p style="margin-top:6px;font-size:.82rem;">
+              <i class="bi bi-geo-alt-fill me-1"></i>Av. Paulista, 1374 — Sala 210
+            </p>
+            <div class="d-flex gap-2 mt-2">
+              <button class="btn btn-sm" style="background:rgba(255,255,255,.2); color:#fff; border:none; font-size:.75rem; border-radius:6px;">
+                <i class="bi bi-car-front-fill me-1"></i>Uber
+              </button>
+              <button class="btn btn-sm" style="background:rgba(255,255,255,.2); color:#fff; border:none; font-size:.75rem; border-radius:6px;">
+                <i class="bi bi-sign-turn-right-fill me-1"></i>Waze
+              </button>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <div class="countdown-box">
+              <div class="num" id="cdDias">10</div>
+              <div class="lbl">Dias</div>
+            </div>
+            <div class="countdown-box">
+              <div class="num" id="cdHoras">09</div>
+              <div class="lbl">Horas</div>
+            </div>
+            <div class="countdown-box">
+              <div class="num" id="cdMin">37</div>
+              <div class="lbl">Min</div>
+            </div>
+            <div class="countdown-box">
+              <div class="num" id="cdSeg">00</div>
+              <div class="lbl">Seg</div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex gap-2 mt-3 flex-wrap">
+          <button class="confirm-btn" id="dashConfirmBtn" onclick="quickConfirm()">
+            <i class="bi bi-check-circle-fill"></i> Confirmar Presença
+          </button>
+          <button class="reschedule-btn" id="dashCalendarBtn" onclick="addToCalendar(this)" style="color:#fff;border-color:rgba(255,255,255,.5);background:rgba(0,0,0,.15);">
+            <i class="bi bi-calendar-plus me-1"></i>Add Calendário (+20pts)
+          </button>
+          <button class="reschedule-btn" onclick="showSection('reagendamento')" style="color:#fff;border-color:rgba(255,255,255,.5);">
+            <i class="bi bi-calendar2-event me-1"></i>Reagendar
+          </button>
+        </div>
+      </div>
+
+      <!-- AI Insight Card -->
+      <div class="card-cp mb-3" style="background:linear-gradient(90deg, #f3e8ff, #fdf4ff); border-left:4px solid #a855f7; padding:20px;">
+        <div class="d-flex gap-3 align-items-start">
+          <div style="background:#a855f7; color:#fff; width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <i class="bi bi-magic" style="font-size:1.2rem;"></i>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:.9rem; color:#7e22ce;">MedSync AI Insight</div>
+            <div style="font-size:.82rem; color:var(--cp-text); margin-top:4px; line-height:1.4;">
+              Notamos que já faz <strong>1 ano</strong> desde o seu último check-up cardiológico. A prevenção é a melhor escolha! Agende seu retorno agora e garanta <span style="color:#a855f7; font-weight:700;">+200 pts de bônus</span>.
+            </div>
+            <button class="btn mt-2" style="background:#a855f7; color:#fff; font-weight:600; border-radius:8px; font-size:.78rem; padding:6px 14px; border:none; transition:transform 0.2s;" onclick="showSection('reagendamento'); showToast('🗓️ Iniciando agendamento preventivo! +200 pts aguardando.', 'success')">
+              Agendar Check-up Preventivo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="bi bi-calendar-check"></i></div>
+            <div>
+              <div class="stat-value">12</div>
+              <div class="stat-label">Consultas no ano</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon green"><i class="bi bi-patch-check"></i></div>
+            <div>
+              <div class="stat-value">11</div>
+              <div class="stat-label">Comparecimentos</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon cyan"><i class="bi bi-trophy"></i></div>
+            <div>
+              <div class="stat-value" id="statPts">1100</div>
+              <div class="stat-label">Pontos acumulados</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon yellow"><i class="bi bi-bar-chart-fill"></i></div>
+            <div>
+              <div class="stat-value">92%</div>
+              <div class="stat-label">Taxa de presença</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linha de baixo: próximas + histórico rápido -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card-cp h-100">
+            <div class="section-title"><i class="bi bi-calendar2 me-2 text-cp-blue"></i>Próximas Consultas</div>
+            <div class="history-item">
+              <div class="history-dot attended"></div>
+              <div class="history-info">
+                <div class="history-title">Dr. Carlos Ferreira — Cardiologia</div>
+                <div class="history-sub"><i class="bi bi-clock me-1"></i>15/05/2026 · 14h00 · Unidade Paulista</div>
+              </div>
+              <span class="history-badge attended">Confirmado</span>
+            </div>
+            <div class="history-item">
+              <div class="history-dot" style="background:#94a3b8;"></div>
+              <div class="history-info">
+                <div class="history-title">Dra. Juliana Alves — Dermatologia</div>
+                <div class="history-sub"><i class="bi bi-clock me-1"></i>28/05/2026 · 10h30 · Unidade Faria Lima</div>
+              </div>
+              <span class="history-badge" style="background:#f1f5f9;color:#64748b;">Pendente</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-cp h-100">
+            <div class="section-title"><i class="bi bi-trophy me-2 text-cp-cyan"></i>Meu Progresso</div>
+            <div style="font-size:.82rem;color:var(--cp-gray-text);margin-bottom:8px;">
+              Nível Prata → Ouro · <span style="font-weight:600;color:var(--cp-blue);">1100 / 1500 pts</span>
+            </div>
+            <div style="background:#e5e7eb;border-radius:99px;height:10px;overflow:hidden;margin-bottom:12px;">
+              <div id="dashProgress" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cp-blue),var(--cp-cyan));width:0%;transition:width 1.2s ease;"></div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+              <div style="flex:1;background:var(--cp-blue-light);border-radius:10px;padding:10px;text-align:center;">
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:var(--cp-blue);font-size:1.1rem;">400</div>
+                <div style="font-size:.72rem;color:var(--cp-gray-text);">pts para Ouro</div>
+              </div>
+              <div style="flex:1;background:var(--cp-cyan-soft);border-radius:10px;padding:10px;text-align:center;">
+                <div style="font-family:'Montserrat',sans-serif;font-weight:700;color:var(--cp-cyan);font-size:1.1rem;">3</div>
+                <div style="font-size:.72rem;color:var(--cp-gray-text);">recompensas disponíveis</div>
+              </div>
+            </div>
+            <button class="btn-cp-primary w-100 mt-3" onclick="showSection('gamificacao')">
+              Ver recompensas <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 2: CONFIRMAÇÃO
+    ============================================================ -->
+    <div id="sec-confirmacao" class="section-page">
+
+      <!-- Alerta de reforço -->
+      <div class="alert-reinforce mb-3">
+        <i class="bi bi-bell-fill"></i>
+        <div>
+          <div style="font-weight:600;font-size:.9rem;">Lembrete: consulta em 10 dias!</div>
+          <div style="font-size:.8rem;color:#92400e;margin-top:2px;">
+            Confirme sua presença e garanta 100 pontos. Não confirmado ainda vai nos forçar a liberar o horário.
+          </div>
+        </div>
+      </div>
+
+      <div class="confirm-card mb-3">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="doctor-avatar"><i class="bi bi-person-fill"></i></div>
+          <div>
+            <h5 style="font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:2px;">Dr. Carlos Ferreira</h5>
+            <div style="font-size:.84rem;color:var(--cp-gray-text);">CRM 123456-SP · Especialidade: Cardiologia</div>
+            <div style="font-size:.82rem;margin-top:4px;">
+              <span style="background:var(--cp-blue-light);color:var(--cp-blue);border-radius:6px;padding:2px 10px;font-weight:600;font-size:.76rem;">
+                Consulta de Rotina
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div style="background:var(--cp-gray);border-radius:10px;padding:12px;text-align:center;">
+              <i class="bi bi-calendar3 text-cp-blue" style="font-size:1.2rem;"></i>
+              <div style="font-weight:600;font-size:.88rem;margin-top:4px;">15 de Maio</div>
+              <div style="font-size:.75rem;color:var(--cp-gray-text);">Quinta-feira</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div style="background:var(--cp-gray);border-radius:10px;padding:12px;text-align:center;">
+              <i class="bi bi-clock text-cp-blue" style="font-size:1.2rem;"></i>
+              <div style="font-weight:600;font-size:.88rem;margin-top:4px;">14h00</div>
+              <div style="font-size:.75rem;color:var(--cp-gray-text);">~30 minutos</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div style="background:var(--cp-gray);border-radius:10px;padding:12px;text-align:center;">
+              <i class="bi bi-building text-cp-blue" style="font-size:1.2rem;"></i>
+              <div style="font-weight:600;font-size:.88rem;margin-top:4px;">Unidade Paulista</div>
+              <div style="font-size:.75rem;color:var(--cp-gray-text);">Sala 210</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div style="background:var(--cp-gray);border-radius:10px;padding:12px;text-align:center;">
+              <i class="bi bi-trophy text-cp-cyan" style="font-size:1.2rem;"></i>
+              <div style="font-weight:600;font-size:.88rem;margin-top:4px;color:var(--cp-cyan);">+100 pts</div>
+              <div style="font-size:.75rem;color:var(--cp-gray-text);">ao confirmar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Countdown -->
+        <div style="text-align:center;margin:20px 0;">
+          <div style="font-size:.8rem;color:var(--cp-gray-text);margin-bottom:8px;">Tempo restante para confirmação</div>
+          <div class="d-flex justify-content-center gap-2">
+            <div style="background:var(--cp-blue-dark);border-radius:10px;padding:10px 18px;color:#fff;text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;" id="cd2Dias">10</div>
+              <div style="font-size:.68rem;opacity:.7;">DIAS</div>
+            </div>
+            <div style="background:var(--cp-blue-dark);border-radius:10px;padding:10px 18px;color:#fff;text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;" id="cd2Horas">09</div>
+              <div style="font-size:.68rem;opacity:.7;">HORAS</div>
+            </div>
+            <div style="background:var(--cp-blue-dark);border-radius:10px;padding:10px 18px;color:#fff;text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;" id="cd2Min">37</div>
+              <div style="font-size:.68rem;opacity:.7;">MIN</div>
+            </div>
+            <div style="background:var(--cp-blue-dark);border-radius:10px;padding:10px 18px;color:#fff;text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;" id="cd2Seg">00</div>
+              <div style="font-size:.68rem;opacity:.7;">SEG</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Status feedback -->
+        <div id="confirmStatus" style="display:none;background:var(--cp-blue-light);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <i class="bi bi-check-circle-fill text-cp-blue" style="font-size:1.3rem;"></i>
+          <div>
+            <div style="font-weight:600;font-size:.9rem;color:var(--cp-blue);">Presença confirmada!</div>
+            <div style="font-size:.8rem;color:var(--cp-gray-text);">+100 pontos adicionados à sua conta.</div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap" id="confirmActions">
+          <button class="confirm-btn" id="mainConfirmBtn" onclick="confirmPresenca()">
+            <i class="bi bi-check-circle-fill"></i> Confirmar Presença (+100 pts)
+          </button>
+          <button class="reschedule-btn" onclick="showSection('reagendamento')">
+            <i class="bi bi-calendar2-event me-1"></i>Reagendar
+          </button>
+          <button class="cancel-btn" onclick="openCancelModal()">
+            Cancelar consulta
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 3: REAGENDAMENTO
+    ============================================================ -->
+    <div id="sec-reagendamento" class="section-page">
+
+      <div class="row g-3">
+        <div class="col-md-7">
+          <div class="card-cp">
+            <div class="section-title"><i class="bi bi-calendar2-week me-2 text-cp-blue"></i>Escolha uma nova data</div>
+
+            <!-- Navegação de mês -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <button onclick="prevMonth()" style="background:none;border:none;font-size:1.2rem;color:var(--cp-blue);cursor:pointer;">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;" id="calMonthLabel">Maio 2026</div>
+              <button onclick="nextMonth()" style="background:none;border:none;font-size:1.2rem;color:var(--cp-blue);cursor:pointer;">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+
+            <!-- Dias da semana -->
+            <div class="calendar-grid mb-1">
+              <div class="cal-day-label">Dom</div>
+              <div class="cal-day-label">Seg</div>
+              <div class="cal-day-label">Ter</div>
+              <div class="cal-day-label">Qua</div>
+              <div class="cal-day-label">Qui</div>
+              <div class="cal-day-label">Sex</div>
+              <div class="cal-day-label">Sáb</div>
+            </div>
+
+            <div class="calendar-grid" id="calGrid"></div>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="card-cp mb-3">
+            <div class="section-title"><i class="bi bi-clock me-2 text-cp-blue"></i>Horários disponíveis</div>
+            <div id="selectedDateLabel" style="font-size:.82rem;color:var(--cp-gray-text);margin-bottom:12px;">
+              Selecione uma data no calendário.
+            </div>
+            <div class="row g-2" id="timeSlots"></div>
+          </div>
+
+          <div class="card-cp" id="rescheduleConfirmCard" style="display:none;">
+            <div class="section-title">Confirmar reagendamento</div>
+            <div style="font-size:.88rem;margin-bottom:16px;" id="rescheduleInfo"></div>
+            <button class="btn-cp-primary w-100" onclick="confirmReschedule()">
+              <i class="bi bi-check2-circle me-2"></i>Confirmar Reagendamento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 4: GAMIFICAÇÃO
+    ============================================================ -->
+    <div id="sec-gamificacao" class="section-page">
+
+      <!-- Banner de pontos -->
+      <div class="points-banner mb-3">
+        <div class="level-badge mb-2">
+          <i class="bi bi-star-fill"></i> Nível Prata
+        </div>
+        <div class="points-value" id="gamePts">1.100</div>
+        <div class="points-label">pontos acumulados</div>
+
+        <div class="mt-3 mb-1 d-flex justify-content-between" style="font-size:.8rem;opacity:.8;">
+          <span>Nível Prata</span>
+          <span id="ptsToGold">400 pts para Ouro</span>
+        </div>
+        <div class="progress-cp">
+          <div class="bar" id="progressBar" style="width:0%;"></div>
+        </div>
+
+        <div class="mt-3 d-flex gap-3 flex-wrap" style="font-size:.82rem;">
+          <div><i class="bi bi-calendar-check me-1"></i>+100 pts por consulta confirmada</div>
+          <div><i class="bi bi-patch-check me-1"></i>+50 pts por check-in</div>
+        </div>
+      </div>
+
+      <!-- Jornada MedSync -->
+      <div class="card-cp mb-3">
+        <div class="section-title"><i class="bi bi-rocket-takeoff-fill me-2 text-cp-blue"></i>Rumo ao Nível Ouro</div>
+        <p style="font-size:.85rem;color:var(--cp-gray-text);margin-bottom:20px;">
+          Faltam apenas <strong><span id="ptsRemaining">400</span> pts</strong> para você alcançar o Nível Ouro e desbloquear o Kit Premium L'Occitane.
+        </p>
+        
+        <!-- Stepper Visual -->
+        <div class="level-stepper mb-4">
+          <div class="step past">
+            <div class="circle"><i class="bi bi-check-lg"></i></div>
+            <div class="label">Bronze</div>
+          </div>
+          <div class="line past"></div>
+          <div class="step current">
+            <div class="circle"><i class="bi bi-star-fill"></i></div>
+            <div class="label">Prata</div>
+          </div>
+          <div class="line pending"></div>
+          <div class="step pending">
+            <div class="circle"><i class="bi bi-lock-fill"></i></div>
+            <div class="label">Ouro</div>
+          </div>
+        </div>
+
+        <div style="background:var(--cp-blue-light); border-radius:10px; padding:16px;">
+          <div style="font-weight:600; font-size:.85rem; color:var(--cp-blue-dark); margin-bottom:12px;">
+            <i class="bi bi-lightning-charge-fill text-cp-warning me-1"></i>Acelere sua jornada:
+          </div>
+          <div class="d-flex align-items-start gap-2 mb-2" style="font-size:.8rem;">
+            <i class="bi bi-check-circle-fill text-cp-success" style="margin-top:2px;"></i>
+            <div>Confirme sua próxima consulta para ganhar <span style="color:var(--cp-blue); font-weight:600;">+100 pts</span></div>
+          </div>
+          <div class="d-flex align-items-start gap-2" style="font-size:.8rem;">
+            <i class="bi bi-check-circle-fill text-cp-success" style="margin-top:2px;"></i>
+            <div>Preencha seu Pre-visit Intake Form e ganhe <span style="color:var(--cp-blue); font-weight:600;">+50 pts</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recompensas -->
+      <div class="section-title"><i class="bi bi-gift me-2 text-cp-blue"></i>Recompensas disponíveis</div>
+
+      <div class="d-flex flex-column gap-3">
+
+        <div class="reward-card">
+          <div class="reward-icon" style="background:#dbeafe;"><span style="font-size:1.5rem;">💊</span></div>
+          <div>
+            <div class="reward-pts">500 pts</div>
+            <div class="reward-title">10% de desconto em farmácia parceira</div>
+            <div class="reward-desc">Válido em toda a rede Drogasil e Droga Raia</div>
+          </div>
+          <button class="btn-redeem redeemed" disabled>Resgatado</button>
+        </div>
+
+        <div class="reward-card">
+          <div class="reward-icon" style="background:#e0f2fe; color:var(--cp-blue); font-weight:bold; font-size:1rem;">N</div>
+          <div>
+            <div class="reward-pts">800 pts</div>
+            <div class="reward-title">Hidratante Neutrogena Hydro Boost</div>
+            <div class="reward-desc">Resgate seu produto e cuide da pele. Retirada na clínica.</div>
+          </div>
+          <button class="btn-redeem" onclick="redeemReward(this, 800)">Resgatar</button>
+        </div>
+
+        <div class="reward-card">
+          <div class="reward-icon" style="background:#fce7f3; color:#db2777; font-weight:bold; font-size:.9rem;">LRP</div>
+          <div>
+            <div class="reward-pts">1000 pts</div>
+            <div class="reward-title">Protetor Anthelios La Roche-Posay</div>
+            <div class="reward-desc">Proteção solar premium garantida pelas suas conquistas.</div>
+          </div>
+          <button class="btn-redeem" onclick="redeemReward(this, 1000)">Resgatar</button>
+        </div>
+
+        <div class="reward-card">
+          <div class="reward-icon" style="background:#fef3c7; color:#d97706; font-weight:bold; font-size:.8rem;">L'OCC</div>
+          <div>
+            <div class="reward-pts">1500 pts</div>
+            <div class="reward-title">Kit Bem-Estar L'Occitane en Provence</div>
+            <div class="reward-desc">Ouro MedSync: Experiência premium exclusiva.</div>
+          </div>
+          <button class="btn-redeem" disabled>Requer Nível Ouro</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 5: HISTÓRICO
+    ============================================================ -->
+    <div id="sec-historico" class="section-page">
+
+      <!-- Resumo -->
+      <div class="row g-3 mb-3">
+        <div class="col-4">
+          <div class="card-cp text-center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;color:var(--cp-success);">11</div>
+            <div style="font-size:.78rem;color:var(--cp-gray-text);">Comparecimentos</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card-cp text-center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;color:var(--cp-warning);">1</div>
+            <div style="font-size:.78rem;color:var(--cp-gray-text);">Cancelamentos</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card-cp text-center">
+            <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:700;color:var(--cp-danger);">0</div>
+            <div style="font-size:.78rem;color:var(--cp-gray-text);">No-shows</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtro -->
+      <div class="card-cp mb-3">
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn btn-sm" style="background:var(--cp-blue);color:#fff;border-radius:8px;" onclick="filterHistory('all', this)">Todos</button>
+          <button class="btn btn-sm btn-outline-secondary" style="border-radius:8px;" onclick="filterHistory('attended', this)">Comparecido</button>
+          <button class="btn btn-sm btn-outline-secondary" style="border-radius:8px;" onclick="filterHistory('cancelled', this)">Cancelado</button>
+          <button class="btn btn-sm btn-outline-secondary" style="border-radius:8px;" onclick="filterHistory('missed', this)">No-show</button>
+        </div>
+
+        <div id="historyList">
+          <!-- gerado por JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEÇÃO 6: CHECK-IN
+    ============================================================ -->
+    <div id="sec-checkin" class="section-page">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card-cp">
+            <div class="section-title"><i class="bi bi-qr-code me-2 text-cp-blue"></i>Check-in Pré-Consulta</div>
+            <p style="font-size:.85rem;color:var(--cp-gray-text);margin-bottom:20px;">
+              Faça seu check-in até <strong>1 hora antes</strong> da consulta. Você ganha +50 pontos e agiliza seu atendimento.
+            </p>
+
+            <!-- QR simulado -->
+            <div style="text-align:center;margin-bottom:20px;">
+              <div style="display:inline-block;background:var(--cp-blue-dark);border-radius:16px;padding:20px;">
+                <i class="bi bi-qr-code" style="font-size:6rem;color:#fff;"></i>
+              </div>
+              <div style="margin-top:10px;font-size:.8rem;color:var(--cp-gray-text);">
+                Apresente este QR Code na recepção
+              </div>
+            </div>
+
+            <button class="btn-cp-primary w-100" onclick="doCheckin()">
+              <i class="bi bi-qr-code-scan me-2"></i>Realizar Check-in (+50 pts)
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-cp">
+            <div class="section-title"><i class="bi bi-list-check me-2 text-cp-blue"></i>Pré-Consulta</div>
+            <div id="checkinSteps">
+              <!-- gerado por JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sec-checkin -->
+
+  </main><!-- /main-content -->
+
+  <!-- ============================================================
+       MODAL: Cancelar consulta
+  ============================================================ -->
+  <div class="modal-overlay" id="cancelModal">
+    <div class="modal-box">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="width:56px;height:56px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+          <i class="bi bi-x-circle-fill" style="font-size:1.6rem;color:var(--cp-danger);"></i>
+        </div>
+        <h5 style="font-family:'Montserrat',sans-serif;font-weight:700;">Deseja cancelar a consulta?</h5>
+        <p style="font-size:.88rem;color:var(--cp-gray-text);margin-top:8px;">
+          Imprevistos acontecem! Se o problema for <strong>deslocamento</strong>, você pode converter sua consulta para <strong>Telemedicina</strong> e ser atendida de casa agora mesmo.
+        </p>
+        <p style="font-size:.82rem;color:var(--cp-gray-text);margin-top:8px;">
+          Caso prefira cancelar, você ajuda a <strong>Fila de Espera</strong> e mantém seu status positivo no MedSync.
+        </p>
+      </div>
+      <div class="d-flex flex-column gap-2">
+        <button class="btn-cp-primary w-100" style="background:#8b5cf6;" onclick="convertToTelehealth()">
+          <i class="bi bi-camera-video-fill me-2"></i>Converter para Telemedicina
+        </button>
+        <div class="d-flex gap-2">
+          <button class="reschedule-btn w-100" onclick="closeModal('cancelModal');showSection('reagendamento')">
+            <i class="bi bi-calendar2-event me-1"></i>Reagendar
+          </button>
+          <button class="btn-cp-primary w-100" style="background:var(--cp-danger);" onclick="cancelConsulta()">
+            Cancelar mesmo assim
+          </button>
+        </div>
+      </div>
+      <button onclick="closeModal('cancelModal')" style="background:none;border:none;width:100%;margin-top:12px;font-size:.85rem;color:var(--cp-gray-text);cursor:pointer;">
+        Voltar
+      </button>
+    </div>
+  </div>
+
+  <!-- Simulador de Notificação -->
+  <button class="sim-push-btn" onclick="triggerPushSimulation()">
+    <i class="bi bi-phone-vibrate"></i> Simular Push
+  </button>
+  
+  <div class="push-simulation" id="pushSim">
+    <div class="push-header">
+      <div class="push-icon"><i class="bi bi-whatsapp"></i></div>
+      <div>MedSync <span style="font-weight:normal;opacity:.8;font-size:.7rem;margin-left:4px;">agora mesmo</span></div>
+      <button onclick="closePush()" style="margin-left:auto;background:none;border:none;color:#fff;cursor:pointer;"><i class="bi bi-x"></i></button>
+    </div>
+    <div class="push-body">
+      <strong>Olá Bruno!</strong> Sua consulta com Dr. Carlos Ferreira é amanhã às 14h00.<br><br>
+      Confirme sua presença agora e garanta <strong>+100 pts</strong> no seu MedSync.
+    </div>
+    <div class="push-actions">
+      <button class="confirm" onclick="confirmFromPush()">Confirmar (+100 pts)</button>
+      <button class="reschedule" onclick="closePush();showSection('reagendamento')">Reagendar</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       OFFCANVAS: DEPENDENTES
+  ============================================================ -->
+  <div class="offcanvas-overlay" id="depOverlay" onclick="closeDependents()"></div>
+  <div class="offcanvas-panel" id="depPanel">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 style="font-family:'Montserrat',sans-serif;font-weight:700;margin:0;">
+        <i class="bi bi-people-fill text-cp-blue me-2"></i>Dependentes
+      </h5>
+      <button onclick="closeDependents()" style="background:none;border:none;font-size:1.5rem;color:var(--cp-gray-text);cursor:pointer;">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <p style="font-size:.85rem;color:var(--cp-gray-text);margin-bottom:20px; line-height:1.4;">
+      Gerencie a saúde da sua família. Os pontos ganhos por eles vão direto para o seu saldo <strong>MedSync</strong>!
+    </p>
+
+    <!-- Filho -->
+    <div class="card-cp mb-3" style="padding:16px;">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--cp-blue-light);color:var(--cp-blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;">
+          LC
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.9rem;">Lucas da Cunha</div>
+          <div style="font-size:.75rem;color:var(--cp-gray-text);">Filho • 8 anos</div>
+        </div>
+      </div>
+      <div style="background:#fefce8;border:1px solid #fef08a;border-radius:8px;padding:12px;">
+        <div style="font-size:.7rem;font-weight:700;color:#854d0e;margin-bottom:4px;">PRÓXIMA CONSULTA</div>
+        <div style="font-size:.85rem;font-weight:600;margin-bottom:2px;">Dra. Camila - Pediatria</div>
+        <div style="font-size:.8rem;color:#a16207;margin-bottom:10px;"><i class="bi bi-calendar-event me-1"></i>Amanhã, 09h00</div>
+        <button class="btn btn-sm w-100" style="background:#ca8a04;color:#fff;font-weight:600;font-size:.8rem;border:none;" onclick="confirmDependent(this)">
+          Confirmar Presença (+100 pts)
+        </button>
+      </div>
+    </div>
+
+    <!-- Esposa -->
+    <div class="card-cp" style="padding:16px;">
+      <div class="d-flex align-items-center gap-3 mb-2">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--cp-blue-light);color:var(--cp-blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;">
+          MC
+        </div>
+        <div>
+          <div style="font-weight:600;font-size:.9rem;">Mariana da Cunha</div>
+          <div style="font-size:.75rem;color:var(--cp-gray-text);">Esposa • 34 anos</div>
+        </div>
+      </div>
+      <div style="font-size:.8rem;color:var(--cp-gray-text);margin-left:52px;">
+        Sem consultas agendadas.
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastMsg">Ação realizada!</span>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
