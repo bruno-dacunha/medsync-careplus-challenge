@@ -4,7 +4,7 @@
 
 🌐 **Acesse o sistema rodando ao vivo:** [Clique aqui para abrir](https://bruno-dacunha.github.io/medsync-careplus-challenge/)
 
----
+
 
 ## 🎯 O Desafio de Negócio (O Problema)
 O *no-show* gera impactos críticos na cadeia de saúde. O desafio foi criar um sistema que não apenas lembrasse o paciente, mas mudasse o seu comportamento e protegesse a receita da clínica, combatendo:
@@ -12,7 +12,7 @@ O *no-show* gera impactos críticos na cadeia de saúde. O desafio foi criar um 
 *   💸 Aumento de custos operacionais.
 *   ⚠️ Comprometimento da jornada de cuidado do paciente.
 
----
+
 
 ## 💡 A Solução e Arquitetura do Produto
 O **MedSync** foi estruturado em duas camadas de atuação para garantir a saúde do negócio e o bem-estar dos pacientes:
@@ -27,7 +27,7 @@ O **MedSync** foi estruturado em duas camadas de atuação para garantir a saúd
 *   🧠 **Saúde Preditiva (AI Insights):** Cruzamento de dados para sugerir check-ups preventivos.
 *   📋 **Pre-visit Intake Form:** Formulários de check-in antecipado online, otimizando o fluxo na recepção.
 
----
+
 
 ## 🖥️ UX e Interface
 A interface foi projetada focando em clareza visual, *frictionless* (zero atrito) e visão de dependentes (Hub de Saúde Familiar).
@@ -38,7 +38,7 @@ A interface foi projetada focando em clareza visual, *frictionless* (zero atrito
 | **Confirmação de Ação** | **Reagendamento** |
 | <img src="assets/tela-confirmar.png" width="400"> | <img src="assets/tela-reagendamento.png" width="400"> |
 
----
+
 
 ## ⚙️ Arquitetura de Dados (Modelagem)
 Para sustentar a operação e a gamificação, o banco de dados relacional foi modelado contemplando o ecossistema médico:
@@ -54,7 +54,7 @@ Para sustentar a operação e a gamificação, o banco de dados relacional foi m
 **Modelo Relacional**<br>
 <img src="assets/mer-mod-relacional.png" width="700">
 
----
+
 
 ## 🛠️ Tecnologias Utilizadas
 *   **Modelagem de Dados:** Oracle SQL / Relacional
